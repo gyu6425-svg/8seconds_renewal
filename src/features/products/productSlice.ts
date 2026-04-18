@@ -12,10 +12,7 @@ import type {
 import { createInitialProductListState } from './productTypes';
 
 const initialState: ProductState = {
-  lists: {
-    men: createInitialProductListState(),
-    women: createInitialProductListState(),
-  },
+  lists: {},
 };
 
 const getProductListState = (state: ProductState, category: string) => {

@@ -1,8 +1,10 @@
-import { menAppendProducts, menInitialProducts } from '../../data/men';
-import { womenAppendProducts, womenInitialProducts } from '../../data/women';
+import { menNewProducts } from '../../data/men';
+import { womenNewProducts } from '../../data/women';
+import type { ProductSubCategory } from '../../features/products/productTypes';
 
 export type ProductQueryParams = {
-  category?: string;
+  gender?: 'men' | 'women';
+  subCategory?: ProductSubCategory;
   search?: string;
   page?: number;
 };
@@ -13,6 +15,7 @@ export type ProductApiItem = {
   brand: string;
   name: string;
   price: number;
+  subCategory: ProductSubCategory;
 };
 
 export type ProductsResponse = {
@@ -21,6 +24,8 @@ export type ProductsResponse = {
   page: number;
 };
 
+const PAGE_SIZE = 8;
+
 const toProductApiItems = (
   products: Array<{
     id: number;
@@ -28,6 +33,7 @@ const toProductApiItems = (
     brand: string;
     name: string;
     price: string;
+    subCategory: ProductSubCategory;
   }>,
 ): ProductApiItem[] =>
   products.map((product) => ({
@@ -36,39 +42,37 @@ const toProductApiItems = (
     brand: product.brand,
     name: product.name,
     price: Number(product.price.replaceAll(',', '')),
+    subCategory: product.subCategory,
   }));
 
 export async function getProducts(
   params: ProductQueryParams = {},
 ): Promise<ProductsResponse> {
-  const category = params.category;
-  const page = params.page ?? 1;
+  const { gender, subCategory = 'all', page = 1 } = params;
 
-  if (category === 'men') {
-    const items = page === 1 ? menInitialProducts : page === 2 ? menAppendProducts : [];
+  // gender별 데이터 선택
+  const rawProducts = gender === 'men'
+    ? menNewProducts
+    : gender === 'women'
+      ? womenNewProducts
+      : [];
 
-    return {
-      items: toProductApiItems(items),
-      hasMore: page < 2,
-      page,
-    };
-  }
+  const allItems = toProductApiItems(rawProducts);
 
-  if (category === 'women') {
-    const items = page === 1 ? womenInitialProducts : page === 2 ? womenAppendProducts : [];
+  // subCategory 필터링
+  const filtered = subCategory === 'all'
+    ? allItems
+        .filter((item, index, arr) => arr.findIndex((p) => p.id === item.id) === index)
+        .map((item, index) => ({ ...item, id: String(index + 1) }))
+    : allItems.filter((item) => item.subCategory === subCategory);
 
-    return {
-      items: toProductApiItems(items),
-      hasMore: page < 2,
-      page,
-    };
-  }
+  // 페이지네이션
+  const start = (page - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const pageItems = filtered.slice(start, end);
+  const hasMore = end < filtered.length;
 
-  return {
-    items: [],
-    hasMore: false,
-    page: 1,
-  };
+  return { items: pageItems, hasMore, page };
 }
 
 export const fetchProducts = getProducts;

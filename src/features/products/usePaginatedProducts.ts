@@ -9,7 +9,7 @@ import {
   setProductsError,
   setProductsLoading,
 } from './productSlice';
-import type { ProductCategoryKey } from './productTypes';
+import type { ProductSubCategory } from './productTypes';
 import { defaultProductListState } from './productTypes';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -102,10 +102,17 @@ const getResolvedPage = (data: unknown, fallbackPage: number) => {
   return fallbackPage;
 };
 
-export function usePaginatedProducts(category: ProductCategoryKey) {
+export function usePaginatedProducts(
+  gender: 'men' | 'women',
+  subCategory: ProductSubCategory = 'all',
+) {
   const dispatch = useAppDispatch();
+
+  // gender + subCategory 조합을 Redux 키로 사용
+  const categoryKey = subCategory === 'all' ? gender : `${gender}_${subCategory}`;
+
   const productListState = useAppSelector(
-    (state) => state.products.lists[category] ?? defaultProductListState,
+    (state) => state.products.lists[categoryKey] ?? defaultProductListState,
   );
   const { items, loading, error, hasMore, page } = productListState;
 
@@ -114,11 +121,12 @@ export function usePaginatedProducts(category: ProductCategoryKey) {
   const fetchPage = useCallback(
     async (nextPage: number, mode: 'replace' | 'append') => {
       try {
-        dispatch(setProductsLoading({ category, loading: true }));
-        dispatch(setProductsError({ category, error: null }));
+        dispatch(setProductsLoading({ category: categoryKey, loading: true }));
+        dispatch(setProductsError({ category: categoryKey, error: null }));
 
         const data = await getProducts({
-          category,
+          gender,
+          subCategory,
           page: nextPage,
         });
         const nextItems = getProductItems(data);
@@ -126,34 +134,34 @@ export function usePaginatedProducts(category: ProductCategoryKey) {
         const resolvedPage = getResolvedPage(data, nextPage);
 
         if (mode === 'replace') {
-          dispatch(setProducts({ category, items: nextItems }));
+          dispatch(setProducts({ category: categoryKey, items: nextItems }));
         } else {
-          dispatch(addProducts({ category, items: nextItems }));
+          dispatch(addProducts({ category: categoryKey, items: nextItems }));
         }
 
-        dispatch(setPage({ category, page: resolvedPage }));
-        dispatch(setHasMore({ category, hasMore: nextHasMore }));
+        dispatch(setPage({ category: categoryKey, page: resolvedPage }));
+        dispatch(setHasMore({ category: categoryKey, hasMore: nextHasMore }));
       } catch (fetchError) {
         dispatch(
           setProductsError({
-            category,
+            category: categoryKey,
             error: fetchError instanceof Error ? fetchError.message : '상품을 불러오지 못했습니다.',
           }),
         );
       } finally {
-        dispatch(setProductsLoading({ category, loading: false }));
+        dispatch(setProductsLoading({ category: categoryKey, loading: false }));
       }
     },
-    [category, dispatch],
+    [categoryKey, gender, subCategory, dispatch],
   );
 
   useEffect(() => {
     void fetchPage(INITIAL_PAGE, 'replace');
 
     return () => {
-      dispatch(clearProducts({ category }));
+      dispatch(clearProducts({ category: categoryKey }));
     };
-  }, [category, dispatch, fetchPage]);
+  }, [categoryKey, dispatch, fetchPage]);
 
   const handleLoadMore = useCallback(async () => {
     if (loading || !hasMore) {

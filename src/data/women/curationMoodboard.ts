@@ -3,20 +3,17 @@ const fillImageSet = (images: string[], total = 9) =>
 
 export const womenCurationChipSets = [
     {
-        id: 'kim',
-        label: '#김경준 PICK',
-        images: fillImageSet(Array.from({ length: 9 }, (_, index) => `/images/men/celeb${index + 1}.png`)),
-    },
-    {
-        id: 'happy-jungho',
-        label: '#해피가이정호 PICK',
+        id: 'kwon',
+        label: '#권연주 PICK',
         images: fillImageSet(
-            Array.from({ length: 8 }, (_, index) => `/images/men/new${index + 1}.png`),
+            Array.from({ length: 9 }, (_, index) => `/images/women/celeb${index + 1}.png`)
         ),
     },
     {
-        id: 'casual',
-        label: '#캐주얼 꾸안꾸',
-        images: fillImageSet(['/images/men/click1.png', '/images/men/click2.png', '/images/men/click3.png']),
+        id: 'wm',
+        label: '#수박온니 PICK',
+        images: fillImageSet(
+            Array.from({ length: 8 }, (_, index) => `/images/women/celeb2_${index + 1}.png`)
+        ),
     },
 ] as const;

@@ -10,7 +10,7 @@ export default function MenCurationMoodboard() {
     const typographyRef = useRef<HTMLDivElement | null>(null);
     const imageGridRef = useRef<HTMLDivElement | null>(null);
     const [activeChip, setActiveChip] = useState<(typeof menCurationChipSets)[number]['id']>(
-        menCurationChipSets[0].id,
+        menCurationChipSets[0].id
     );
 
     useLayoutEffect(() => {
@@ -59,7 +59,7 @@ export default function MenCurationMoodboard() {
                 stagger: 0.03,
                 ease: 'power2.out',
                 overwrite: 'auto',
-            },
+            }
         );
     }, [activeChip]);
 
@@ -125,7 +125,10 @@ export default function MenCurationMoodboard() {
                         {/* Row 1: Images 1-3 with Custom Column Layout */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[0].map((image, index) => (
-                                <div key={`${activeChip}-row1-${index + 1}`} className="w-full overflow-hidden">
+                                <div
+                                    key={`${activeChip}-row1-${index + 1}`}
+                                    className="w-full overflow-hidden"
+                                >
                                     <img
                                         src={image}
                                         alt={`${activeSet.label} ${index + 1}`}
@@ -141,7 +144,10 @@ export default function MenCurationMoodboard() {
                         {/* Row 2: Images 4-6 */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[1].map((image, index) => (
-                                <div key={`${activeChip}-row2-${index + 4}`} className="w-full overflow-hidden">
+                                <div
+                                    key={`${activeChip}-row2-${index + 4}`}
+                                    className="w-full overflow-hidden"
+                                >
                                     <img
                                         src={image}
                                         alt={`${activeSet.label} ${index + 4}`}
@@ -154,7 +160,10 @@ export default function MenCurationMoodboard() {
                         {/* Row 3: Images 7-9 */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[2].map((image, index) => (
-                                <div key={`${activeChip}-row3-${index + 7}`} className="w-full overflow-hidden">
+                                <div
+                                    key={`${activeChip}-row3-${index + 7}`}
+                                    className="w-full overflow-hidden"
+                                >
                                     <img
                                         src={image}
                                         alt={`${activeSet.label} ${index + 7}`}

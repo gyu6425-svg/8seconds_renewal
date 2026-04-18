@@ -18,14 +18,14 @@ export const menHeroSliderCards = [
         title: 'LAST PIECES',
         subTitle: '단 4일, 인기 상품 최대 ~70%',
         image: '/images/men/hero_card_image3.png',
-        category: 'SPRING SEASON',
+        category: '25SS SEASONOFF',
     },
     {
         id: '04',
         title: '일상 속의',
         subTitle: '익숙하고 편안한 데일리 웨어',
         image: '/images/men/hero_card_image4.png',
-        category: 'ONLINE ONLY',
+        category: 'DAILY',
     },
     {
         id: '05',
@@ -36,9 +36,9 @@ export const menHeroSliderCards = [
     },
     {
         id: '06',
-        title: 'CASUAL WEEK',
-        subTitle: '데일리로 입기 좋은 시즌 룩',
+        title: 'TOGETHER',
+        subTitle: '함께라서 더 따뜻해',
         image: '/images/men/hero_card_image6.png',
-        category: 'ONLINE ONLY',
+        category: 'TOGETHER',
     },
 ] as const;

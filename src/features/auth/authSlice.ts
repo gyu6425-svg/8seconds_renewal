@@ -4,6 +4,26 @@ import type { AuthSessionPayload, AuthState } from './authTypes';
 
 const AUTH_STORAGE_KEY = 'auth';
 
+// JWT payload의 exp 클레임 추출 (외부 라이브러리 없이 atob으로 디코딩)
+const getJwtExpiry = (token: string): number | null => {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3 || !parts[1]) return null;
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const decoded = JSON.parse(atob(base64)) as Record<string, unknown>;
+    return typeof decoded.exp === 'number' ? decoded.exp : null;
+  } catch {
+    return null;
+  }
+};
+
+// 현재 시각 기준 토큰 만료 여부 확인 (exp 없으면 유효 처리)
+const isTokenExpired = (token: string): boolean => {
+  const exp = getJwtExpiry(token);
+  if (exp === null) return false;
+  return Math.floor(Date.now() / 1000) > exp;
+};
+
 const baseInitialState: AuthState = {
   isLoggedIn: false,
   userId: null,
@@ -26,10 +46,18 @@ const getStoredAuthState = (): Partial<AuthState> => {
 
     const parsedAuth = JSON.parse(savedAuth) as Partial<AuthState>;
 
+    const accessToken = typeof parsedAuth.accessToken === 'string' ? parsedAuth.accessToken : null;
+
+    // 만료된 토큰이면 localStorage 초기화 후 비로그인 상태로 복구
+    if (accessToken && isTokenExpired(accessToken)) {
+      window.localStorage.removeItem(AUTH_STORAGE_KEY);
+      return {};
+    }
+
     return {
       isLoggedIn: typeof parsedAuth.isLoggedIn === 'boolean' ? parsedAuth.isLoggedIn : false,
       userId: typeof parsedAuth.userId === 'string' ? parsedAuth.userId : null,
-      accessToken: typeof parsedAuth.accessToken === 'string' ? parsedAuth.accessToken : null,
+      accessToken,
     };
   } catch {
     return {};

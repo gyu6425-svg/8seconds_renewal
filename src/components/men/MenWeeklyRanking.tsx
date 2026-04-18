@@ -34,7 +34,8 @@ export default function MenWeeklyRanking() {
     }, [activeWeek]);
 
     const activeSet =
-        menWeeklyRankingSets.find((weekSet) => weekSet.id === activeWeek) ?? menWeeklyRankingSets[0];
+        menWeeklyRankingSets.find((weekSet) => weekSet.id === activeWeek) ??
+        menWeeklyRankingSets[0];
 
     return (
         <section className="w-full bg-white pt-[200px]">

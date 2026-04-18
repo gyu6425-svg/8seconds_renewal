@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import MainLayout from '../components/layout/MainLayout';
 import ProtectedRoute from '../components/routes/ProtectedRoute';
+import PageSkeleton from '../components/common/PageSkeleton';
 
 const Landing = lazy(() => import('../pages/landing/Landing'));
 const Men = lazy(() => import('../pages/men/Men'));
@@ -14,7 +15,7 @@ const MyPage = lazy(() => import('../pages/mypage/MyPage'));
 const NotFound = lazy(() => import('../pages/not-found/NotFound'));
 
 const withSuspense = (element: ReactNode) => (
-  <Suspense fallback={<div>Loading...</div>}>{element}</Suspense>
+  <Suspense fallback={<PageSkeleton />}>{element}</Suspense>
 );
 
 export const router = createBrowserRouter([

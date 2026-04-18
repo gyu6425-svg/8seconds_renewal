@@ -1,11 +1,35 @@
 export type ProductCategoryKey = 'men' | 'women' | string;
 
+export type ProductSubCategory =
+  | 'all'
+  | 'outer'
+  | 'jacket'
+  | 'knit'
+  | 'tshirt'
+  | 'pants'
+  | 'fashion'
+  | 'jewelry'
+  | 'trending';
+
+export const SUB_CATEGORY_LABELS: Record<ProductSubCategory, string> = {
+  all: '전체 상품',
+  outer: '아우터',
+  jacket: '재킷',
+  knit: '니트',
+  tshirt: '티셔츠',
+  pants: '팬츠',
+  fashion: '패션잡화',
+  jewelry: '주얼리/시계',
+  trending: 'Trending',
+};
+
 export interface Product {
   id: string;
   image: string;
   brand: string;
   name: string;
   price: number;
+  subCategory: ProductSubCategory;
 }
 
 export interface ProductListState {

@@ -5,7 +5,7 @@ import { womenWeeklyRankingSets } from '../../data/women';
 
 export default function WomenWeeklyRanking() {
     const [activeWeek, setActiveWeek] = useState<(typeof womenWeeklyRankingSets)[number]['id']>(
-        womenWeeklyRankingSets[0].id,
+        womenWeeklyRankingSets[0].id
     );
     const productListRef = useRef<HTMLDivElement | null>(null);
     const { scrollRef, isDragging, dragHandlers } = useHorizontalDragScroll();
@@ -29,19 +29,20 @@ export default function WomenWeeklyRanking() {
                 stagger: 0.04,
                 ease: 'power2.out',
                 overwrite: 'auto',
-            },
+            }
         );
     }, [activeWeek]);
 
     const activeSet =
-        womenWeeklyRankingSets.find((weekSet) => weekSet.id === activeWeek) ?? womenWeeklyRankingSets[0];
+        womenWeeklyRankingSets.find((weekSet) => weekSet.id === activeWeek) ??
+        womenWeeklyRankingSets[0];
 
     return (
         <section className="w-full bg-white pt-[200px]">
             <div className="w-[1700px] flex items-start gap-[154px]">
                 <div className="sticky top-[280px] z-10 h-[818px] w-[559px] shrink-0 overflow-hidden">
                     <img
-                        src="/images/men/online_banner.png"
+                        src="/images/women/online_banner.png"
                         alt="Promotion"
                         className="h-full w-full object-cover"
                     />
@@ -84,7 +85,10 @@ export default function WomenWeeklyRanking() {
                         }`}
                         {...dragHandlers}
                     >
-                        <div ref={productListRef} className="flex min-w-max gap-[12px] snap-x snap-mandatory">
+                        <div
+                            ref={productListRef}
+                            className="flex min-w-max gap-[12px] snap-x snap-mandatory"
+                        >
                             {activeSet.items.map((item, idx) => (
                                 <div
                                     key={`${activeWeek}-${idx}`}

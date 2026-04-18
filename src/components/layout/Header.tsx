@@ -160,9 +160,9 @@ export default function Header() {
                             </div>
                         </form>
 
-                        <nav className="secondary-category-nav w-full translate-y-[-80px] text-right">
+                        <nav className="secondary-category-nav flex w-full translate-y-[-30px] flex-col items-end gap-4 text-right">
                             {isLoggedIn ? (
-                                <p className="mb-3 block w-full truncate text-right font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[12px] font-medium uppercase tracking-[0.12em] text-[#666666]">
+                                <p className="w-full truncate font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[12px] font-medium uppercase tracking-[0.12em] text-[#666666]">
                                     {userId}
                                 </p>
                             ) : null}
@@ -171,14 +171,14 @@ export default function Header() {
                                 <button
                                     type="button"
                                     onClick={handleLogout}
-                                    className="mb-4 block w-full text-right font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                    className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 text-right"
                                 >
                                     LOGOUT
                                 </button>
                             ) : (
                                 <NavLink
                                     to="/login"
-                                    className="mb-4 block w-full text-right font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                    className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
                                 >
                                     LOGIN
                                 </NavLink>
@@ -190,7 +190,7 @@ export default function Header() {
                                         <NavLink
                                             key={category.label}
                                             to={category.to}
-                                            className="mb-4 block w-full text-right font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                            className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
                                         >
                                             {category.label}
                                         </NavLink>
@@ -199,7 +199,7 @@ export default function Header() {
                                     <NavLink
                                         key={category.label}
                                         to={category.to}
-                                        className="mb-4 block w-full text-right font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                        className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
                                     >
                                         {category.label}
                                     </NavLink>
