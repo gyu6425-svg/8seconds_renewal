@@ -24,17 +24,15 @@ export default function Landing() {
     };
 
     return (
-        <div className="relative flex min-h-[1180px] items-center justify-center bg-[#ffffff]">
-            <div className="pointer-events-none absolute inset-x-0 top-2 z-30 flex justify-center">
-                <div className="top-controls w-full max-w-[100%] px-4 pt-4 md:px-8 md:pt-6 xl:px-0 xl:pt-5">
-                    <div className="flex gap-[1726px] items-center justify-between">
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#ffffff] py-20 xl:min-h-[900px] xl:py-0">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
                         <button
                             type="button"
                             aria-label="Open menu"
                             aria-expanded={isMenuOpen}
                             aria-controls="landing-side-menu-overlay"
                             onClick={() => setIsMenuOpen(true)}
-                            className="pointer-events-auto flex h-11 w-11 items-center justify-center text-[#111111] transition hover:opacity-70 "
+                            className="pointer-events-auto absolute left-8 top-7 flex h-11 w-11 items-center justify-center text-[#111111] transition hover:opacity-70"
                         >
                             <svg
                                 viewBox="0 0 24 24"
@@ -50,7 +48,7 @@ export default function Landing() {
                             type="button"
                             onClick={handleAccountClick}
                             aria-label={isLoggedIn ? 'Go to my page' : 'Go to login'}
-                            className="pointer-events-auto flex h-10 w-10 items-center justify-center text-black transition hover:opacity-70"
+                            className="pointer-events-auto absolute right-8 top-7 flex h-10 w-10 items-center justify-center text-black transition hover:opacity-70"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -68,8 +66,6 @@ export default function Landing() {
                                 />
                             </svg>
                         </button>
-                    </div>
-                </div>
             </div>
 
             <div className="relative z-10 mx-auto flex w-full max-w-[1700px] items-center justify-center px-4 py-10 md:px-8 md:py-12 xl:px-0 xl:py-0">
@@ -79,7 +75,7 @@ export default function Landing() {
             <img
                 src={blackLogoImage}
                 alt="8seconds black logo"
-                className="pointer-events-none absolute bottom-[-90px] right-[-80px] z-0 w-[290px] md:bottom-[-140px] md:right-[-140px] md:w-[560px] xl:bottom-[-200px] xl:right-[0px] xl:w-[720px]"
+                className="pointer-events-none absolute bottom-[24px] right-[16px] z-0 w-[290px] md:bottom-[28px] md:right-[24px] md:w-[560px] xl:bottom-[32px] xl:right-[32px] xl:w-[720px]"
             />
 
             <SideMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

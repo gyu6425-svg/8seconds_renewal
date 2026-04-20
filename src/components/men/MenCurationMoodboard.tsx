@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menCurationChipSets } from '../../data/men';
@@ -125,8 +126,9 @@ export default function MenCurationMoodboard() {
                         {/* Row 1: Images 1-3 with Custom Column Layout */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[0].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row1-${index + 1}`}
+                                    to={`/products/men-celeb-${activeChip}-${index + 1}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -134,7 +136,7 @@ export default function MenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 1}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
 
@@ -144,8 +146,9 @@ export default function MenCurationMoodboard() {
                         {/* Row 2: Images 4-6 */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[1].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row2-${index + 4}`}
+                                    to={`/products/men-celeb-${activeChip}-${index + 4}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -153,15 +156,16 @@ export default function MenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 4}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
 
                         {/* Row 3: Images 7-9 */}
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[2].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row3-${index + 7}`}
+                                    to={`/products/men-celeb-${activeChip}-${index + 7}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -169,7 +173,7 @@ export default function MenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 7}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

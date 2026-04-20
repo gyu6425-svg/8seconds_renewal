@@ -1,3 +1,4 @@
-export default function Button() {
-  return <button type="button">Button</button>;
-}
+import { Button as UiButton } from '../ui/button';
+
+export { UiButton as Button };
+export default UiButton;

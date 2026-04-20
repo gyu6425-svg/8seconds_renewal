@@ -106,25 +106,25 @@ export default function Header() {
                 isVisible ? 'translate-y-0' : '-translate-y-full'
             }`}
         >
-            <div className="mx-auto w-[1700px] py-[24px]">
-                <div className="header-inner flex gap-[920px] w-full items-start justify-between">
-                    <div className="header-left flex w-[650px] items-center gap-[109px] ">
+            <div className="mx-auto w-full max-w-[1700px] px-4 py-[18px] md:px-8 xl:px-0 xl:py-[24px]">
+                <div className="header-inner flex w-full flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+                    <div className="header-left flex w-full flex-col gap-6 md:flex-row md:items-center md:justify-between xl:w-auto xl:justify-start xl:gap-[109px]">
                         <Link to="/" className="shrink-0 transition-opacity hover:opacity-75">
                             <img
                                 src="/images/common/main_logo.png"
                                 alt="8seconds"
-                                className="h-[80px] w-[137px] object-contain"
+                                className="h-[56px] w-[96px] object-contain xl:h-[80px] xl:w-[137px]"
                             />
                         </Link>
 
-                        <nav className="main-category-nav flex items-center gap-[22px] lg:gap-10 xl:gap-12">
+                        <nav className="main-category-nav flex w-full items-center gap-5 overflow-x-auto whitespace-nowrap scrollbar-hide md:w-auto lg:gap-10 xl:gap-12">
                             {mainCategories.map((category) => (
                                 <NavLink
                                     key={category.label}
                                     to={category.to}
                                     className={({ isActive }) =>
                                         [
-                                            "whitespace-nowrap font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65",
+                                            "whitespace-nowrap font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[16px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 xl:text-[18px]",
                                             isActive ? 'opacity-100' : 'opacity-90',
                                         ].join(' ')
                                     }
@@ -135,8 +135,8 @@ export default function Header() {
                         </nav>
                     </div>
 
-                    <div className="header-right flex h-[220px] w-[180px] flex-col items-end justify-between">
-                        <form onSubmit={handleSearchSubmit} className="w-full">
+                    <div className="header-right flex w-full flex-col items-end gap-5 xl:h-[220px] xl:w-[180px] xl:justify-between">
+                        <form onSubmit={handleSearchSubmit} className="w-full max-w-[260px] xl:max-w-none">
                             <label htmlFor="header-search" className="sr-only">
                                 Search
                             </label>
@@ -160,9 +160,9 @@ export default function Header() {
                             </div>
                         </form>
 
-                        <nav className="secondary-category-nav flex w-full translate-y-[-30px] flex-col items-end gap-4 text-right">
+                        <nav className="secondary-category-nav flex w-full flex-row flex-wrap items-center justify-end gap-4 text-right xl:translate-y-[-30px] xl:flex-col xl:items-end">
                             {isLoggedIn ? (
-                                <p className="w-full truncate font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[12px] font-medium uppercase tracking-[0.12em] text-[#666666]">
+                                <p className="max-w-[180px] truncate font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[12px] font-medium uppercase tracking-[0.12em] text-[#666666] xl:w-full">
                                     {userId}
                                 </p>
                             ) : null}
@@ -171,14 +171,14 @@ export default function Header() {
                                 <button
                                     type="button"
                                     onClick={handleLogout}
-                                    className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 text-right"
+                                    className="font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[16px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 xl:w-full xl:text-right xl:text-[18px]"
                                 >
                                     LOGOUT
                                 </button>
                             ) : (
                                 <NavLink
                                     to="/login"
-                                    className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                    className="font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[16px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 xl:w-full xl:text-[18px]"
                                 >
                                     LOGIN
                                 </NavLink>
@@ -190,7 +190,7 @@ export default function Header() {
                                         <NavLink
                                             key={category.label}
                                             to={category.to}
-                                            className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                            className="font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[16px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 xl:w-full xl:text-[18px]"
                                         >
                                             {category.label}
                                         </NavLink>
@@ -199,7 +199,7 @@ export default function Header() {
                                     <NavLink
                                         key={category.label}
                                         to={category.to}
-                                        className="w-full font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[18px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65"
+                                        className="font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[16px] font-medium leading-none text-[#111111] transition-opacity hover:opacity-65 xl:w-full xl:text-[18px]"
                                     >
                                         {category.label}
                                     </NavLink>

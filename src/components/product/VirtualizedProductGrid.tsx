@@ -13,7 +13,7 @@ const PRODUCTS_PER_ROW = 4;
 const CARD_WIDTH = 416;
 const COLUMN_GAP = 12;
 const CONTENT_WIDTH = CARD_WIDTH * PRODUCTS_PER_ROW + COLUMN_GAP * (PRODUCTS_PER_ROW - 1);
-const ROW_HEIGHT = 720;
+const ROW_HEIGHT = 780;
 
 function VirtualizedProductGridComponent({ items, onReachEnd }: VirtualizedProductGridProps) {
     const rowCount = useMemo(() => Math.ceil(items.length / PRODUCTS_PER_ROW), [items.length]);

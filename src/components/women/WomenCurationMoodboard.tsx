@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { womenCurationChipSets } from '../../data/women';
@@ -119,8 +120,9 @@ export default function WomenCurationMoodboard() {
                     <div ref={imageGridRef} className="relative z-10 flex flex-col gap-[12px]">
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[0].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row1-${index + 1}`}
+                                    to={`/products/women-celeb-${activeChip}-${index + 1}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -128,7 +130,7 @@ export default function WomenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 1}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
 
@@ -136,8 +138,9 @@ export default function WomenCurationMoodboard() {
 
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[1].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row2-${index + 4}`}
+                                    to={`/products/women-celeb-${activeChip}-${index + 4}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -145,14 +148,15 @@ export default function WomenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 4}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
 
                         <div className="grid grid-cols-[430px_440px_506px] gap-[12px]">
                             {imageRows[2].map((image, index) => (
-                                <div
+                                <Link
                                     key={`${activeChip}-row3-${index + 7}`}
+                                    to={`/products/women-celeb-${activeChip}-${index + 7}`}
                                     className="w-full overflow-hidden"
                                 >
                                     <img
@@ -160,7 +164,7 @@ export default function WomenCurationMoodboard() {
                                         alt={`${activeSet.label} ${index + 7}`}
                                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                                     />
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

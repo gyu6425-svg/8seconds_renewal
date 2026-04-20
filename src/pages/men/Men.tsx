@@ -1,4 +1,4 @@
-import MenClickLanking from '../../components/men/MenClickLanking';
+import MenClickRanking from '../../components/men/MenClickRanking';
 import MenCurationMoodboard from '../../components/men/MenCurationMoodboard';
 import MenHeroSlider from '../../components/men/MenHeroSlider';
 import MenWeeklyRanking from '../../components/men/MenWeeklyRanking';
@@ -18,7 +18,7 @@ export default function Men() {
                 }
             `}</style>
             <MenHeroSlider />
-            <MenClickLanking />
+            <MenClickRanking />
             <MenCurationMoodboard />
             <MenWeeklyRanking />
             <New />

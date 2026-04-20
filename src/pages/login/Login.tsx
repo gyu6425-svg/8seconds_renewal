@@ -19,6 +19,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
     const [guestMessage, setGuestMessage] = useState('');
+    const [guestMessageType, setGuestMessageType] = useState<'success' | 'error' | null>(null);
     const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -53,25 +54,32 @@ export default function Login() {
 
     const handleGuestSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setGuestMessage('비회원 주문조회 API 연결 전 단계입니다.');
+
+        const trimmedOrderNumber = orderNumber.trim();
+        if (trimmedOrderNumber.length < 6) {
+            setGuestMessageType('error');
+            setGuestMessage('주문번호를 6자리 이상 입력해주세요.');
+            return;
+        }
+
+        setGuestMessageType('success');
+        setGuestMessage(`${trimmedOrderNumber} 주문 내역을 확인했습니다.`);
     };
 
     return (
-        <section className="flex min-h-[calc(100vh-360px)] items-start justify-center px-6 pb-24 pt-8 text-[#111111]">
-            <div className="w-full max-w-[670px]">
-                <header className="pb-16 text-center md:pb-20">
-                    <h1 className="text-[48px] font-semibold tracking-[-0.04em] md:text-[40px]">
-                        로그인
-                    </h1>
+        <section className="flex min-h-[calc(100vh-260px)] items-start justify-center px-6 pb-28 pt-0 text-[#111111]">
+            <div className="w-full max-w-[760px]">
+                <header className="pb-[108px] text-center">
+                    <h1 className="text-[40px] font-normal tracking-[-0.04em]">로그인</h1>
                 </header>
 
-                <div className="mb-12 grid grid-cols-2 border-b border-[#333333] text-center text-[24px] font-regular">
+                <div className="mb-[44px] w-[844px] grid grid-cols-2 border-b border-[#bdbdbd] text-center text-[20px] font-normal">
                     <button
                         type="button"
                         onClick={() => setActiveTab('member')}
-                        className={`w-full px-4 pb-4 transition-colors ${
+                        className={`w-full  px-4 pb-[14px] transition-colors ${
                             activeTab === 'member'
-                                ? 'border-b border-[#000000] text-[#000000]'
+                                ? 'border-b border-[#111111] text-[#111111]'
                                 : 'text-[#666666]'
                         }`}
                         aria-current={activeTab === 'member' ? 'page' : undefined}
@@ -81,9 +89,9 @@ export default function Login() {
                     <button
                         type="button"
                         onClick={() => setActiveTab('guest')}
-                        className={`w-full px-4 pb-4 transition-colors ${
+                        className={`w-full px-4 pb-[14px] transition-colors ${
                             activeTab === 'guest'
-                                ? 'border-b border-[#000000] text-[#000000]'
+                                ? 'border-b border-[#111111] text-[#111111]'
                                 : 'text-[#666666]'
                         }`}
                         aria-current={activeTab === 'guest' ? 'page' : undefined}
@@ -95,7 +103,7 @@ export default function Login() {
                 {activeTab === 'member' ? (
                     <form
                         onSubmit={handleSubmit}
-                        className="flex w-full flex-col translate-y-[49px]"
+                        className="mx-auto flex w-full max-w-[503px] flex-col"
                     >
                         <label htmlFor="login-email" className="sr-only">
                             이메일
@@ -108,7 +116,7 @@ export default function Login() {
                             onChange={(event) => setEmail(event.target.value)}
                             placeholder="아이디"
                             required
-                            className="h-[70px] w-full rounded-none border border-[#999999] px-4 text-[18px] text-[#555555] outline-none transition-colors placeholder:text-[#888888] focus-visible:border-[#111111] focus-visible:ring-0"
+                            className="h-[70px] w-[558px] rounded-none border border-[#bdbdbd] px-4 text-[18px] text-[#555555] outline-none transition-colors placeholder:text-[#888888] focus-visible:border-[#111111] focus-visible:ring-0"
                         />
 
                         <label htmlFor="login-password" className="sr-only">
@@ -122,7 +130,7 @@ export default function Login() {
                             onChange={(event) => setPassword(event.target.value)}
                             placeholder="비밀번호"
                             required
-                            className="mt-3 h-[70px] w-full translate-y-[12px] rounded-none border border-[#999999] px-4 text-[18px] text-[#555555] outline-none transition-colors placeholder:text-[#888888] focus-visible:border-[#111111] focus-visible:ring-0"
+                            className="mt-3 h-[70px] w-[558px] rounded-none border border-[#bdbdbd] px-4 text-[18px] text-[#555555] outline-none transition-colors placeholder:text-[#888888] focus-visible:border-[#111111] focus-visible:ring-0"
                         />
 
                         <p
@@ -134,23 +142,23 @@ export default function Login() {
                             {error ?? 'error'}
                         </p>
 
-                        <div className="mt-3 grid w-full translate-y-[44px] grid-cols-2 gap-3">
+                        <div className="mt-[24px] grid w-full grid-cols-2 gap-[70px]">
                             <Button
                                 type="submit"
                                 disabled={loading}
-                                className="h-[60px] w-full rounded-none bg-[#df3228] text-[18px] font-normal text-white transition-opacity hover:bg-[#df3228] hover:opacity-90"
+                                className="h-[60px] w-[273px] rounded-none bg-[#ed1c24] text-[17px] font-normal text-white transition-opacity hover:bg-[#ed1c24] hover:opacity-90"
                             >
                                 {loading ? '로그인 중...' : '로그인'}
                             </Button>
                             <Link
                                 to="/signup"
-                                className="flex h-[60px] w-full items-center justify-center bg-[#F6F6F6] text-[18px] font-normal text-[#6f6f6f] transition-colors hover:bg-[#ebebeb]"
+                                className="flex h-[60px] w-[273px] items-center justify-center bg-[#f7f7f7] text-[17px] font-normal text-[#5f5f5f] transition-colors hover:bg-[#ebebeb]"
                             >
                                 회원가입
                             </Link>
                         </div>
 
-                        <div className="mt-6 flex translate-x-[5px] translate-y-[60px] items-center justify-center gap-4 text-[14px] font-medium text-[#8b8b8b]">
+                        <div className="mt-[26px] translate-[20px] flex items-center justify-center gap-4 text-[13px] font-normal text-[#666666]">
                             <button
                                 type="button"
                                 className="transition-colors hover:text-[#111111]"
@@ -167,7 +175,10 @@ export default function Login() {
                         </div>
                     </form>
                 ) : (
-                    <form onSubmit={handleGuestSubmit} className="flex flex-col translate-y-[49px]">
+                    <form
+                        onSubmit={handleGuestSubmit}
+                        className="mx-auto flex w-[558px] max-w-[503px] flex-col"
+                    >
                         <label htmlFor="guest-order-number" className="sr-only">
                             주문번호
                         </label>
@@ -178,12 +189,16 @@ export default function Login() {
                             onChange={(event) => setOrderNumber(event.target.value)}
                             placeholder="주문번호 입력"
                             required
-                            className="h-[70px] w-[558px] rounded-none border border-[#999999] px-5 text-left text-[18px] text-[#111111] outline-none transition-colors placeholder:text-[#999999] focus-visible:border-[#111111] focus-visible:ring-0"
+                            className="h-[64px] w-full rounded-none border border-[#bdbdbd] px-5 text-left text-[18px] text-[#111111] outline-none transition-colors placeholder:text-[#999999] focus-visible:border-[#111111] focus-visible:ring-0"
                         />
 
                         <p
                             className={`min-h-[24px] pt-4 text-center text-[14px] ${
-                                guestMessage ? 'text-[#8b8b8b]' : 'text-transparent'
+                                guestMessageType === 'error'
+                                    ? 'text-[#d92d20]'
+                                    : guestMessageType === 'success'
+                                      ? 'text-[#111111]'
+                                      : 'text-transparent'
                             }`}
                             aria-live="polite"
                         >
@@ -192,7 +207,7 @@ export default function Login() {
 
                         <Button
                             type="submit"
-                            className="mt-3 h-[60px] w-full rounded-none bg-[#df3228] text-[18px] font-normal text-white transition-opacity hover:bg-[#df3228] hover:opacity-90"
+                            className="mt-[24px] h-[55px] w-full rounded-none bg-[#ed1c24] text-[17px] font-normal text-white transition-opacity hover:bg-[#ed1c24] hover:opacity-90"
                         >
                             조회하기
                         </Button>

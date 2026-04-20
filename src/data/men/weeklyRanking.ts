@@ -12,25 +12,25 @@ export const menWeeklyRankingSets = [
         items: [
             {
                 brand: '8Seconds',
-                name: '그래픽 긴소매 티셔츠 - 아이보리',
-                price: '49,900',
+                name: '[해피가이정호 PICK] 스트라이프 라운드 카디건 - 애쉬',
+                price: '59,900',
                 image: '/images/men/online1.png',
             },
             {
                 brand: '8Seconds',
                 name: '그래픽 긴소매 티셔츠 - 네이비',
-                price: '49,900',
+                price: '39,900',
                 image: '/images/men/online2.png',
             },
             {
                 brand: '8Seconds',
-                name: '스트라이프 카라 니트',
-                price: '59,900',
+                name: '경량 바이커 데님 아우터 - 블랙',
+                price: '99,900',
                 image: '/images/men/online3.png',
             },
             {
                 brand: '8Seconds',
-                name: '캐주얼 무드 데님 팬츠',
+                name: '코듀로이 체크 셔츠 - 애쉬',
                 price: '69,900',
                 image: '/images/men/online4.png',
             },
@@ -42,25 +42,25 @@ export const menWeeklyRankingSets = [
         items: [
             {
                 brand: '8Seconds',
-                name: '루즈핏 체크 셔츠',
+                name: '경량 에센셜 와이드핏 데님 팬츠 - 블루',
                 price: '59,900',
                 image: '/images/men/online2-1.png',
             },
             {
                 brand: '8Seconds',
-                name: '코튼 와이드 팬츠',
+                name: '리넨 혼방 솔리드 라운드 카디건 - 애쉬',
                 price: '69,900',
                 image: '/images/men/online2-2.png',
             },
             {
                 brand: '8Seconds',
-                name: '데일리 집업 니트',
+                name: '내추럴 체크 윈드브레이커 - 스카이블루',
                 price: '79,900',
                 image: '/images/men/online2-3.png',
             },
             {
                 brand: '8Seconds',
-                name: '미니멀 레더 스니커즈',
+                name: '로우 엣지 레터링 반소매 티셔츠 - 브라운',
                 price: '89,900',
                 image: '/images/men/online2-4.png',
             },

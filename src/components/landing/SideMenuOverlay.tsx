@@ -115,6 +115,23 @@ const previewMap: PreviewMap = {
 
 const OVERLAY_TRANSITION_MS = 700;
 
+const secondaryCategoryQuery: Record<SecondaryMenuKey, string | null> = {
+    all: null,
+    outer: 'outer',
+    jacket: 'jacket',
+    knit: 'knit',
+    tshirt: 'tshirt',
+    pants: 'pants',
+    accessories: 'fashion',
+    jewelryWatch: 'jewelry',
+    trending: 'trending',
+};
+
+const getCategoryPath = (basePath: string, categoryKey: SecondaryMenuKey) => {
+    const query = secondaryCategoryQuery[categoryKey];
+    return query ? `${basePath}?category=${query}` : basePath;
+};
+
 function SearchIcon() {
     return (
         <svg
@@ -166,14 +183,19 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
     useEffect(() => {
         let timeoutId: number | undefined;
         let frameId: number | undefined;
+        let visibleFrameId: number | undefined;
 
         if (isOpen) {
-            setShouldRender(true);
             frameId = window.requestAnimationFrame(() => {
-                setIsVisible(true);
+                setShouldRender(true);
+                visibleFrameId = window.requestAnimationFrame(() => {
+                    setIsVisible(true);
+                });
             });
         } else {
-            setIsVisible(false);
+            frameId = window.requestAnimationFrame(() => {
+                setIsVisible(false);
+            });
             timeoutId = window.setTimeout(() => {
                 setShouldRender(false);
             }, OVERLAY_TRANSITION_MS);
@@ -182,6 +204,9 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
         return () => {
             if (frameId) {
                 window.cancelAnimationFrame(frameId);
+            }
+            if (visibleFrameId) {
+                window.cancelAnimationFrame(visibleFrameId);
             }
             if (timeoutId) {
                 window.clearTimeout(timeoutId);
@@ -205,10 +230,6 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [isOpen, onClose]);
-
-    useEffect(() => {
-        setActiveSecondary(null);
-    }, [activePrimary]);
 
     const activePrimaryMenu = useMemo(
         () => primaryMenus.find((menu) => menu.key === activePrimary) ?? primaryMenus[0],
@@ -240,13 +261,12 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                 ].join(' ')}
             >
                 <div className="mx-auto flex min-h-screen w-full max-w-[100%] flex-col px-6 pt-6 pb-6 md:px-10 md:pt-8 md:pb-8 xl:px-0 xl:pt-5 xl:pb-5">
-                    <div className="top-controls w-[1920px] max-w-[100%] px-4 pt-4 md:px-8 md:pt-6 xl:px-0 xl:pt-5">
-                        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-[1726px]">
+                    <div className="top-controls w-full max-w-[100%] px-0 pt-0">
                             <button
                                 type="button"
                                 aria-label="Close menu"
                                 onClick={onClose}
-                                className="flex h-24 w-24 items-center justify-center text-black transition hover:opacity-60"
+                                className="absolute left-8 top-7 flex h-24 w-24 items-center justify-center text-black transition hover:opacity-60"
                             >
                                 <svg
                                     viewBox="0 0 24 24"
@@ -265,7 +285,7 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                             <Link
                                 to="/login"
                                 aria-label="Go to login"
-                                className="pointer-events-auto flex h-10 w-10 items-center justify-center text-black transition hover:opacity-70"
+                                className="pointer-events-auto absolute right-8 top-7 flex h-10 w-10 items-center justify-center text-black transition hover:opacity-70"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -283,11 +303,10 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                                     />
                                 </svg>
                             </Link>
-                        </div>
                     </div>
 
                     <div className="content-inner flex w-full justify-between pt-[40px] xl:pt-[40px]">
-                        <div className="top-[100px] left-[-80px] content-row relative mt-0 pt-0 flex w-full max-w-[1320px] flex-col gap-10 xl:flex-row xl:items-start xl:justify-center xl:gap-[90px]">
+                        <div className="content-row relative mx-auto mt-0 flex w-full max-w-[1320px] flex-col gap-10 pt-16 xl:top-[100px] xl:left-[-80px] xl:flex-row xl:items-start xl:justify-center xl:gap-[90px] xl:pt-0">
                             <div className=" left-[20px] top-[10px] left-main-inner left-main-group z-40 flex gap-10 flex-col items-start pt-0 xl:w-[260px] xl:min-w-[260px]">
                                 <div className="search-inner w-full">
                                     <div className="absolute top-[-70px] left-[-50px] flex items-end gap-3">
@@ -305,10 +324,15 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                                             <Link
                                                 key={menu.key}
                                                 to={menu.path}
-                                                onClick={(event) => {
-                                                    event.preventDefault();
+                                                onMouseEnter={() => {
                                                     setActivePrimary(menu.key);
+                                                    setActiveSecondary(null);
                                                 }}
+                                                onFocus={() => {
+                                                    setActivePrimary(menu.key);
+                                                    setActiveSecondary(null);
+                                                }}
+                                                onClick={onClose}
                                                 className="group flex w-fit items-center gap-1 self-start"
                                             >
                                                 <span
@@ -335,17 +359,21 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                                 </nav>
                             </div>
 
-                            <div className="absolute left-[360px] top-[40px] sub-category-inner sub-category-group z-40 mt-0 flex h-auto w-full flex-col items-start justify-between gap-1 xl:h-[384px] xl:w-[266px] xl:min-w-[266px]">
+                            <div className="sub-category-inner sub-category-group z-40 mt-0 flex h-auto w-full flex-col items-start justify-between gap-3 xl:absolute xl:left-[360px] xl:top-[40px] xl:h-[384px] xl:w-[266px] xl:min-w-[266px] xl:gap-1">
                                 {secondaryMenus.map((menu) => {
                                     const isActive = activeSecondary === menu.key;
 
                                     return (
-                                        <button
+                                        <Link
                                             key={menu.key}
-                                            type="button"
-                                            onClick={() => {
+                                            to={getCategoryPath(activePrimaryMenu.path, menu.key)}
+                                            onMouseEnter={() => {
                                                 setActiveSecondary(menu.key);
                                             }}
+                                            onFocus={() => {
+                                                setActiveSecondary(menu.key);
+                                            }}
+                                            onClick={onClose}
                                             className="group flex items-center gap-1"
                                         >
                                             <span className="font-['Alexandria','Helvetica_Neue',Arial,sans-serif] text-[20px] font-normal leading-none text-black transition-opacity duration-200 group-hover:opacity-100">
@@ -361,13 +389,13 @@ export default function SideMenuOverlay({ isOpen, onClose }: SideMenuOverlayProp
                                             >
                                                 <RedDot />
                                             </span>
-                                        </button>
+                                        </Link>
                                     );
                                 })}
                             </div>
 
                             <section className="preview-inner preview-group relative mt-0 min-h-[520px] xl:min-h-0 xl:flex-1">
-                                <div className="relative top-0 left-[140px] mx-auto h-[760px] w-full max-w-[720px] xl:mx-auto xl:h-[760px] xl:max-w-[720px]">
+                                <div className="relative top-0 mx-auto h-[560px] w-full max-w-[720px] xl:left-[140px] xl:h-[760px] xl:max-w-[720px]">
                                     <div
                                         className={[
                                             'absolute left-[48px] top-[58px] z-10 h-[620px] w-[607px] overflow-visible transition-all duration-500 ease-out',

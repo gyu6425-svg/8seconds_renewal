@@ -1,25 +1,33 @@
-import useHorizontalDragScroll from './useHorizontalDragScroll';
-import { womenClickRankingItems } from '../../data/women';
+import useHorizontalDragScroll from '../../hooks/useHorizontalDragScroll';
 
-export default function WomenClickLanking() {
+type ClickRankingItem = {
+    rank: string;
+    image: string;
+};
+
+type ClickRankingSectionProps = {
+    items: readonly ClickRankingItem[];
+};
+
+export default function ClickRankingSection({ items }: ClickRankingSectionProps) {
     const { scrollRef, isDragging, dragHandlers } = useHorizontalDragScroll();
 
     return (
         <section className="w-full bg-white py-[100px]">
-            <div className="flex gap-[197px]">
-                <div className="relative w-[375px] h-[421px] flex flex-col gap-[20px] text-left">
-                    <h2 className="w-full text-left font-['Alexandria'] text-[80px] font-bold leading-[80px] text-black uppercase text-black">
+            <div className="flex flex-col gap-10 xl:flex-row xl:gap-[120px]">
+                <div className="relative flex min-h-[520px] w-full flex-col text-left xl:-ml-[50px] xl:h-[620px] xl:w-[425px] xl:shrink-0">
+                    <h2 className="w-full text-left font-['Alexandria'] text-[56px] font-bold uppercase leading-none text-black md:text-[80px]">
                         CLICK
                         <br />
-                        LANKING
+                        RANKING
                     </h2>
-                    <p className="w-full text-left font-['Alexandria'] text-[30px] font-regular leading-none text-black">
+                    <p className="mt-[48px] w-full text-left font-['Alexandria'] text-[24px] font-normal leading-none text-black md:text-[30px]">
                         실시간 클릭랭킹
                     </p>
 
-                    <div className="absolute mt-[20px] bottom-0 left-[0px] ">
+                    <div className="mt-[210px] xl:mt-[230px] translate-y-[120px] translate-x-[-140px]">
                         <a
-                            href="#"
+                            href="#ranking"
                             className="group flex items-center gap-2 font-['Alexandria'] text-[20px] font-medium text-black transition-colors"
                         >
                             전체 랭킹보기
@@ -32,14 +40,14 @@ export default function WomenClickLanking() {
 
                 <div
                     ref={scrollRef}
-                    className={`flex-1 overflow-x-auto scrollbar-hide pr-[110px] select-none ${
+                    className={`min-w-0 flex-1 overflow-x-auto scrollbar-hide select-none xl:pr-[80px] ${
                         isDragging ? 'cursor-grabbing' : 'cursor-grab'
                     }`}
                     {...dragHandlers}
                 >
-                    <div className="flex gap-[30px] min-w-max pb-10">
-                        {womenClickRankingItems.map((item) => (
-                            <div key={item.rank} className="relative w-[480px] shrink-0">
+                    <div className="flex min-w-max gap-[30px] pb-10">
+                        {items.map((item) => (
+                            <div key={item.rank} className="relative w-[min(72vw,480px)] shrink-0">
                                 <div className="aspect-[4/5] w-full overflow-hidden bg-gray-50">
                                     <img
                                         src={item.image}
@@ -50,7 +58,7 @@ export default function WomenClickLanking() {
                                 </div>
 
                                 <div className="absolute -bottom-6 -right-2">
-                                    <span className="font-['Alexandria'] text-[120px] font-bold leading-none text-black selection:bg-transparent">
+                                    <span className="font-['Alexandria'] text-[88px] font-bold leading-none text-black selection:bg-transparent md:text-[120px]">
                                         {item.rank}
                                     </span>
                                 </div>

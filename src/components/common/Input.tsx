@@ -1,3 +1,4 @@
-export default function Input() {
-  return <input aria-label="input" />;
-}
+import { Input as UiInput } from '../ui/input';
+
+export { UiInput as Input };
+export default UiInput;

@@ -1,4 +1,4 @@
-import WomenClickLanking from '../../components/women/WomenClickLanking';
+import WomenClickRanking from '../../components/women/WomenClickRanking';
 import WomenCurationMoodboard from '../../components/women/WomenCurationMoodboard';
 import WomenHeroSlider from '../../components/women/WomenHeroSlider';
 import WomenNew from '../../components/women/WomenNew';
@@ -18,7 +18,7 @@ export default function Women() {
                 }
             `}</style>
             <WomenHeroSlider />
-            <WomenClickLanking />
+            <WomenClickRanking />
             <WomenCurationMoodboard />
             <WomenWeeklyRanking />
             <WomenNew />

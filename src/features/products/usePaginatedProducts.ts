@@ -105,11 +105,19 @@ const getResolvedPage = (data: unknown, fallbackPage: number) => {
 export function usePaginatedProducts(
   gender: 'men' | 'women',
   subCategory: ProductSubCategory = 'all',
+  search = '',
 ) {
   const dispatch = useAppDispatch();
 
   // gender + subCategory 조합을 Redux 키로 사용
-  const categoryKey = subCategory === 'all' ? gender : `${gender}_${subCategory}`;
+  const normalizedSearch = search.trim();
+  const categoryKey = [
+    gender,
+    subCategory === 'all' ? null : subCategory,
+    normalizedSearch ? `search_${normalizedSearch}` : null,
+  ]
+    .filter(Boolean)
+    .join('_');
 
   const productListState = useAppSelector(
     (state) => state.products.lists[categoryKey] ?? defaultProductListState,
@@ -127,6 +135,7 @@ export function usePaginatedProducts(
         const data = await getProducts({
           gender,
           subCategory,
+          search: normalizedSearch,
           page: nextPage,
         });
         const nextItems = getProductItems(data);
@@ -152,7 +161,7 @@ export function usePaginatedProducts(
         dispatch(setProductsLoading({ category: categoryKey, loading: false }));
       }
     },
-    [categoryKey, gender, subCategory, dispatch],
+    [categoryKey, gender, normalizedSearch, subCategory, dispatch],
   );
 
   useEffect(() => {

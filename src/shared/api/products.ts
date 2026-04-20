@@ -48,7 +48,7 @@ const toProductApiItems = (
 export async function getProducts(
   params: ProductQueryParams = {},
 ): Promise<ProductsResponse> {
-  const { gender, subCategory = 'all', page = 1 } = params;
+  const { gender, subCategory = 'all', search = '', page = 1 } = params;
 
   // gender별 데이터 선택
   const rawProducts = gender === 'men'
@@ -60,11 +60,20 @@ export async function getProducts(
   const allItems = toProductApiItems(rawProducts);
 
   // subCategory 필터링
-  const filtered = subCategory === 'all'
+  const byCategory = subCategory === 'all'
     ? allItems
         .filter((item, index, arr) => arr.findIndex((p) => p.id === item.id) === index)
         .map((item, index) => ({ ...item, id: String(index + 1) }))
     : allItems.filter((item) => item.subCategory === subCategory);
+
+  const keyword = search.trim().toLowerCase();
+  const filtered = keyword
+    ? byCategory.filter((item) =>
+        [item.brand, item.name, item.subCategory].some((value) =>
+          value.toLowerCase().includes(keyword),
+        ),
+      )
+    : byCategory;
 
   // 페이지네이션
   const start = (page - 1) * PAGE_SIZE;

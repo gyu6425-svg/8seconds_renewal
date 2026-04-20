@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import useHorizontalDragScroll from './useHorizontalDragScroll';
+import useHorizontalDragScroll from '../../hooks/useHorizontalDragScroll';
 import { womenWeeklyRankingSets } from '../../data/women';
 
 export default function WomenWeeklyRanking() {
@@ -39,8 +39,8 @@ export default function WomenWeeklyRanking() {
 
     return (
         <section className="w-full bg-white pt-[200px]">
-            <div className="w-[1700px] flex items-start gap-[154px]">
-                <div className="sticky top-[280px] z-10 h-[818px] w-[559px] shrink-0 overflow-hidden">
+            <div className="flex w-full flex-col items-start gap-12 xl:flex-row xl:gap-[154px]">
+                <div className="z-10 h-[min(100vw,818px)] w-full max-w-[559px] shrink-0 overflow-hidden xl:sticky xl:top-[280px] xl:h-[818px]">
                     <img
                         src="/images/women/online_banner.png"
                         alt="Promotion"
@@ -57,7 +57,7 @@ export default function WomenWeeklyRanking() {
                 </div>
 
                 <div className="flex min-w-0 flex-1 flex-col items-start gap-[81px]">
-                    <div className="translate-x-[-290px] flex shrink-0 self-start gap-[12px]">
+                    <div className="flex w-full shrink-0 gap-[12px] overflow-x-auto scrollbar-hide xl:w-auto xl:translate-x-[-290px]">
                         {womenWeeklyRankingSets.map((weekSet) => {
                             const isActive = weekSet.id === activeWeek;
 
