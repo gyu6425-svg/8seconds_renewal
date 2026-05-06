@@ -49,19 +49,19 @@ export default function CartItem({ item, checked, onCheckedChange }: CartItemPro
                     <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                 </div>
 
-                <div className="min-w-0 pt-1 ">
+                <div className="min-w-0 pt-4 pr-30">
                     <div>
-                        <p className="text-[22px] font-extrabold leading-none text-[#ed1c24]">
+                        <p className="text-[22px] font-extrabold leading-none text-[#ed1c24] translate-x-[-50px]">
                             8seconds
                         </p>
-                        <h2 className="translate-y-[4px] text-[22px] font-semibold leading-none tracking-[-0.03em] text-[#111111]">
+                        <h2 className="translate-y-[4px] text-[22px] font-semibold leading-none tracking-[-0.03em] text-[#111111] translate-x-[-50px]">
                             {item.name}
                         </h2>
                     </div>
 
-                    <div className=" translate-y-[20px] translate-x-[-60px] flex flex-col gap-2 text-[18px] font-medium leading-none text-[#777777]">
-                        <p className="translate-x-[-20px]">color : ivory</p>
-                        <p className="translate-x-[-38px]">size : {item.size}</p>
+                    <div className=" translate-y-[20px] translate-x-[-60px] flex flex-col gap-2 text-[18px] font-medium leading-none text-[#777777] ">
+                        <p className="translate-x-[-38px]">color : ivory</p>
+                        <p className="translate-x-[-55px]">size : {item.size}</p>
                     </div>
 
                     <div className="translate-y-[40px]  inline-flex h-[38px] items-center border border-[#777777]">
