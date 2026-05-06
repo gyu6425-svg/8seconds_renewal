@@ -2,11 +2,29 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { AddToCartPayload, CartState } from './cartTypes';
 
-const initialState: CartState = {
+export const CART_STORAGE_KEY = 'cart';
+
+const emptyState: CartState = {
   items: [],
   totalQuantity: 0,
   totalPrice: 0,
 };
+
+function loadCartFromStorage(): CartState {
+  try {
+    const serialized = localStorage.getItem(CART_STORAGE_KEY);
+    if (!serialized) return emptyState;
+    const parsed = JSON.parse(serialized) as CartState;
+    // items 기반으로 합계 재계산하여 stale 값 방지
+    return {
+      items: parsed.items ?? [],
+      totalQuantity: parsed.items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0,
+      totalPrice: parsed.items?.reduce((sum, item) => sum + item.price * item.quantity, 0) ?? 0,
+    };
+  } catch {
+    return emptyState;
+  }
+}
 
 const recalculateCart = (state: CartState) => {
   state.totalQuantity = state.items.reduce((total, item) => total + item.quantity, 0);
@@ -15,7 +33,7 @@ const recalculateCart = (state: CartState) => {
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState,
+  initialState: loadCartFromStorage,
   reducers: {
     addToCart(state, action: PayloadAction<AddToCartPayload>) {
       const { id, productId, name, price, image, size, quantity = 1 } = action.payload;
@@ -67,9 +85,9 @@ const cartSlice = createSlice({
       recalculateCart(state);
     },
     clearCart(state) {
-      state.items = initialState.items;
-      state.totalQuantity = initialState.totalQuantity;
-      state.totalPrice = initialState.totalPrice;
+      state.items = emptyState.items;
+      state.totalQuantity = emptyState.totalQuantity;
+      state.totalPrice = emptyState.totalPrice;
     },
   },
 });

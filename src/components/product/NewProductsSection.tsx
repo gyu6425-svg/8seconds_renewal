@@ -29,7 +29,10 @@ function getSubCategoryFromQuery(value: string | null): ProductSubCategory {
     return queryCategoryMap[value] ?? 'all';
 }
 
-export default function NewProductsSection({ gender, topPaddingClassName }: NewProductsSectionProps) {
+export default function NewProductsSection({
+    gender,
+    topPaddingClassName,
+}: NewProductsSectionProps) {
     const [searchParams] = useSearchParams();
     const initialCategory = getSubCategoryFromQuery(searchParams.get('category'));
     const [subCategory, setSubCategory] = useState<ProductSubCategory>(initialCategory);
@@ -37,7 +40,7 @@ export default function NewProductsSection({ gender, topPaddingClassName }: NewP
     const { items, loading, error, hasMore, handleLoadMore } = usePaginatedProducts(
         gender,
         subCategory,
-        search,
+        search
     );
 
     return (

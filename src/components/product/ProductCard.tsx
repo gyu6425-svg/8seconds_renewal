@@ -30,7 +30,7 @@ function ProductCardComponent({ product }: ProductCardProps) {
   };
 
   return (
-    <article className="group flex w-full max-w-[416px] cursor-pointer flex-col items-start gap-[8px]">
+    <article className="group flex w-full cursor-pointer flex-col items-start gap-[8px]">
       <div className="relative w-full overflow-hidden bg-[#f5f5f5]">
         <img
           src={product.image}
